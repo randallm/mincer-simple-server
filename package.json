@@ -1,0 +1,21 @@
+{
+  "name": "mincer-simple-server",
+  "version": "0.1.0",
+  "description": "Compile mincer assets with HTTP requests",
+  "main": "index.js",
+  "author": "Poll Everywhere, Inc. and Randall Ma",
+  "license": "MIT",
+  "dependencies": {
+    "coffee-script": "^1.9.3",
+    "connect": "^3.4.0",
+    "haml-coffee": "^1.14.1",
+    "mincer": "^1.2.5",
+    "mincer-haml-coffee": "0.0.1",
+    "mkdirp": "^0.5.1",
+    "yargs": "^3.12.0"
+  },
+  "devDependencies": {
+    "jshint": "^2.8.0",
+    "node-inspector": "^0.10.2"
+  }
+}
