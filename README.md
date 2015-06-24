@@ -37,8 +37,16 @@ The first compile of an asset with a lot of `require` calls will take a long tim
 
 **Client**
 
+To mince assets:
+
 ```sh
-$ curl -X PUT -H "Content-Length: 0" localhost:3000
+$ curl -X PUT localhost:3000
+```
+
+To kill the server:
+
+```
+$ curl localhost:3000/exit
 ```
 
 ## Contributing :heart_eyes:

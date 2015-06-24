@@ -20,6 +20,13 @@ argv.include.forEach(function(dir) {
 
 var app = connect();
 
+app.use('/exit', function(req, res, next) {
+  console.log('Shutting down mincer-simple-server');
+  res.writeHead(202, {});
+  res.end();
+  process.exit();
+});
+
 app.use(function(req, res, next) {
   if (req.method !== 'PUT') { return; }
   next();
