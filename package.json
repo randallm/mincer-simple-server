@@ -1,6 +1,6 @@
 {
   "name": "mincer-simple-server",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Compile mincer assets with HTTP requests",
   "main": "index.js",
   "author": "Poll Everywhere, Inc. and Randall Ma",
