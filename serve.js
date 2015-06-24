@@ -45,7 +45,7 @@ app.use(function(req, res, next) {
   try {
     fs.lstatSync(helper.absoluteBuildDir());
   } catch (err) {
-    mkdirp.sync(helper.absoluteBuildDir(), { mode: 751 });
+    mkdirp.sync(helper.absoluteBuildDir());
     console.log('New directory ' + helper.absoluteBuildDir() + ' created');
   }
 
