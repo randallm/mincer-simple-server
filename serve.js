@@ -72,7 +72,7 @@ app.use(function(req, res, next) {
 });
 
 app.use(function(req, res, next) {
-  if (argv.enableSourceMaps) {
+  if (argv.enableSourceMaps && argv.enableSourceMaps !== 'false') {
     environment.enable('source_maps');
   } else {
     environment.disable('source_maps');
