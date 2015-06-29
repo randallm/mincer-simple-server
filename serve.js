@@ -64,7 +64,9 @@ app.use(function(req, res, next) {
     // The cache directory needs to be populated once with source map data. Then
     // source maps can be toggled on and off on subsequent runs. If this is not
     // called on first run, source maps cannot be generated.
-    environment.findAsset('application.js.coffee');
+    argv.files.forEach(function(file) {
+      environment.findAsset(file);
+    });
     environment.disable('source_maps');
   }
 
