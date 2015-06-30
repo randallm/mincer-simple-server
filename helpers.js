@@ -13,8 +13,11 @@ module.exports = {
     return path.join(this.absoluteBuildDir(this.argv), 'cache');
   },
 
-  getFileExtension: function(filename) {
+  getFileExtension: function(pathname) {
     // path.extname doesn't work with compound extensions like 'app.js.coffee'
+    var splitPathname = pathname.split('/');
+    var filename = splitPathname[splitPathname.length - 1];
+
     return '.' + filename.split('.').slice(1).join('.');
   },
 
@@ -28,8 +31,8 @@ module.exports = {
   },
 
   writeAssetToDisk: function(asset) {
-    file = path.basename(asset.pathname, this.getFileExtension(asset.pathname)) + '.js';
-    filePath = path.join(this.absoluteBuildDir(this.argv), file);
+    var file = path.basename(asset.pathname, this.getFileExtension(asset.pathname)) + '.js';
+    var filePath = path.join(this.absoluteBuildDir(this.argv), file);
 
     fs.writeFileSync(filePath, asset.source);
     console.log(file + ' (' + asset.digest + ') written to ' + filePath);
