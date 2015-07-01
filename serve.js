@@ -10,7 +10,7 @@ var argv = require('yargs')
   .array('include')
   .array('files')
   .argv;
-helper.argv = argv;
+helper.extendFromArgv(argv, ['root', 'buildDir']);
 
 var environment = new Mincer.Environment(argv.root);
 helper.environment = environment;
@@ -76,9 +76,12 @@ app.use(function(req, res, next) {
 app.use(function(req, res, next) {
   if (argv.enableSourceMaps && argv.enableSourceMaps !== 'false') {
     environment.enable('source_maps');
+    helper.sourceMapsEnabled = true;
   } else {
     environment.disable('source_maps');
+    helper.sourceMapsEnabled = false;
   }
+
   next();
 });
 
@@ -87,7 +90,7 @@ app.use(function(req, res, next) {
     return environment.findAsset(file);
   });
 
-  helper.writeAssetsToDisk(assets);
+  helper.writeAssets(assets);
 
   res.writeHead(200, {});
   res.end();

@@ -2,15 +2,22 @@ var path = require('path');
 var fs = require('fs');
 
 module.exports = {
-  argv: {},
-  environment: {},
+  root: null,
+  buildDir: null,
+  sourceMapsState: null,
+
+  extendFromArgv: function(argv, keys) {
+    keys.forEach(function(key) {
+      this[key] = argv[key];
+    }.bind(this));
+  },
 
   absoluteBuildDir: function() {
-    return path.join(this.argv.root, this.argv.buildDir);
+    return path.join(this.root, this.buildDir);
   },
 
   absoluteCacheDir: function() {
-    return path.join(this.absoluteBuildDir(this.argv), 'cache');
+    return path.join(this.absoluteBuildDir(), 'cache');
   },
 
   getFileExtension: function(pathname) {
@@ -21,26 +28,24 @@ module.exports = {
     return '.' + filename.split('.').slice(1).join('.');
   },
 
-  writeAssetsToDisk: function(assets) {
+  writeAssets: function(assets) {
     console.log('');
     console.log(new Date().toUTCString());
 
     assets.forEach((function(asset) {
-      this.writeAssetToDisk(asset);
+      this.writeAsset(asset);
     }).bind(this));
   },
 
-  writeAssetToDisk: function(asset) {
+  writeAsset: function(asset) {
     var file = path.basename(asset.pathname, this.getFileExtension(asset.pathname)) + '.js';
-    var filePath = path.join(this.absoluteBuildDir(this.argv), file);
+    var filePath = path.join(this.absoluteBuildDir(), file);
 
     fs.writeFileSync(filePath, asset.source);
     console.log(file + ' (' + asset.digest + ') written to ' + filePath);
 
-    var sourceMapsState = this.environment.getConfigurations().source_maps.state;
-    if (sourceMapsState === 'enabled' && asset.sourceMap) {
+    if (this.sourceMapsEnabled && asset.sourceMap) {
       fs.writeFileSync(filePath + '.map', asset.sourceMap);
-      console.log(file + '.map written to ' + filePath + '.map');
     }
   }
 };
